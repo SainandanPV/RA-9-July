@@ -1,0 +1,5 @@
+CS101,Computer Science
+MT101,Mathematics
+PH101,Physics
+EN101,English Literature
+CH101,Chemistry
