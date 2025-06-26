@@ -2,12 +2,13 @@ package com.litmus7.rental;
 import java.util.Scanner;
 
 import com.litmus7.rental.dto.*;
+import com.litmus7.rental.service.VehicleService;
 
 public class VehicleApp {
 	public static void main(String[] args) {
 		VehicleService service=new VehicleService();
 		System.out.println("Loading Available Vehicles from the file......");
-		service.loadVehicles("Sample Vehicles.txt");
+		service.loadVehicles("src/Sample Vehicles.txt");
 		Scanner sc=new Scanner(System.in);
 		boolean exit=false;
 		while (!exit) {

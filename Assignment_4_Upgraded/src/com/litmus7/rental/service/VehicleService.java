@@ -1,4 +1,4 @@
-package com.litmus7.rental;
+package com.litmus7.rental.service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
