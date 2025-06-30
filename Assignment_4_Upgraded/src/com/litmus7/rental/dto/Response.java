@@ -12,20 +12,20 @@ public class Response {
 		return statusCode;
 	}
 	public void setStatusCode(Integer statusCode) {
-        this.statusCode = statusCode;
-    }
+        	this.statusCode = statusCode;
+    	}
 	public String getErrorMessage() {
 		return errorMessage;
 	}
 	public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
+        	this.errorMessage = errorMessage;
+    	}
 	public List<Vehicle> getVehicles() {
-        return vehicles;
-    }
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
-    }
+        	return vehicles;
+    	}
+    	public void setVehicles(List<Vehicle> vehicles) {
+        	this.vehicles = vehicles;
+    	}
 	
 	
 }
