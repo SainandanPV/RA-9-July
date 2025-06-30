@@ -24,4 +24,5 @@ public class Car extends Vehicle {
         System.out.println("Number of doors: " + numberOfDoors);
         System.out.println("Car is automatic : " + isAutomatic+"\n");
     }
+    
 }

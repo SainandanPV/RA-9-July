@@ -47,4 +47,5 @@ public class Vehicle {
     public void returnVehicle() { 
     	isRented = false; 
     }
+    
 }

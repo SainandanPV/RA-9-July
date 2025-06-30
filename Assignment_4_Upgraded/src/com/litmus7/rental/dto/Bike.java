@@ -24,4 +24,6 @@ public class Bike extends Vehicle {
         System.out.println("Has Gear : " + hasGear);
         System.out.println("Engine Capacity : " + engineCapacity + "cc"+"\n");
     }
+    
+
 }
