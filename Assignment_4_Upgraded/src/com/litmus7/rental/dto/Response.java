@@ -1,12 +1,17 @@
 package com.litmus7.rental.dto;
 
-import java.util.List;
 
-public class Response {
+public class Response<T> {
 	private Integer statusCode;
 	private String errorMessage;
-	private List<Vehicle> vehicles;
+	private T data;
 	
+	public Response() {}
+	public Response(int statusCode, String errorMessage, T data) {
+		this.statusCode = statusCode;
+        this.errorMessage = errorMessage;
+        this.data = data;
+	}
 	//getters and setters
 	public int getStatusCode() {
 		return statusCode;
@@ -20,11 +25,12 @@ public class Response {
 	public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
     }
-	public List<Vehicle> getVehicles() {
-        return vehicles;
+	
+	public T getData() {
+        return data;
     }
-    public void setVehicles(List<Vehicle> vehicles) {
-        this.vehicles = vehicles;
+    public void setData(T data) {
+        this.data = data;
     }
 	
 	

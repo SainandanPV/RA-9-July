@@ -1,84 +1,89 @@
 package com.litmus7.rental.controller;
 
 import java.util.List;
-
 import com.litmus7.rental.dto.Bike;
 import com.litmus7.rental.dto.Car;
 import com.litmus7.rental.dto.Response;
 import com.litmus7.rental.dto.Vehicle;
-import com.litmus7.rental.exception.*;
+import com.litmus7.rental.exception.VehicleServiceException;
 import com.litmus7.rental.service.VehicleService;
 
 public class VehicleController {
 
-    private VehicleService service;
-    private final int SUCCESS_STATUS_CODE=200;
-    private final int ERROR_STATUS_CODE=500;
+    private final VehicleService service;
+    private static final int SUCCESS_STATUS_CODE = 200;
+    private static final int ERROR_STATUS_CODE = 500;
 
-    // Default constructor 
     public VehicleController() {
         this.service = new VehicleService();
     }
-    
+
     public VehicleController(VehicleService service) {
         this.service = service;
     }
 
-    // Loads vehicle data from the file
-    public Response loadVehiclesFromFile(String filepath) {
-    	Response response=new Response();
+    /** Load vehicles from file */
+    public Response<List<Vehicle>> loadVehiclesFromFile(String filepath) {
         try {
-        	List<Vehicle> loadedVehicles=service.loadVehicles(filepath);
-        	response.setStatusCode(SUCCESS_STATUS_CODE);
-        	response.setVehicles(loadedVehicles);
+            List<Vehicle> loadedVehicles = service.loadVehicles(filepath);
+            return new Response<>(SUCCESS_STATUS_CODE, null, loadedVehicles);
+        } catch (VehicleServiceException e) {
+            return new Response<>(ERROR_STATUS_CODE, e.getMessage(), null);
         }
-        catch(VehicleServiceException e) {
-        	response.setStatusCode(ERROR_STATUS_CODE);
-        	response.setErrorMessage(e.getMessage());
-        }
-        return response;
     }
 
-    // adds vehicle (generic method)
+    /** Add a generic vehicle */
     public void addVehicle(Vehicle vehicle) {
         service.addVehicle(vehicle);
     }
 
-    // returns all the vehicles
-    public List<Vehicle> getAllVehicles() {
-        return service.getVehicles();
+    /** Get all vehicles */
+    public Response<List<Vehicle>> getAllVehicles() {
+        return new Response<>(SUCCESS_STATUS_CODE, null, service.getVehicles());
     }
 
-    // returns only available vehicles
-    public List<Vehicle> getAvailableVehicles() {
-        return service.getAvailableVehicles();
+    /** Get available vehicles */
+    public Response<List<Vehicle>> getAvailableVehicles() {
+        return new Response<>(SUCCESS_STATUS_CODE, null, service.getAvailableVehicles());
     }
 
-    // Adds a car using parameters (from user input)
-    public void addCar(String brand, String model, double price, int doors, boolean isAuto) {
+    /** Add car using parameters */
+    public Response<String> addCar(String brand, String model, double price, int doors, boolean isAuto) {
         Vehicle car = new Car(brand, model, price, doors, isAuto);
         service.addVehicle(car);
-        
+        return new Response<>(SUCCESS_STATUS_CODE, null, "Car added successfully!");
     }
 
-    // Adds a bike using parameters (from user input)
-    public void addBike(String brand, String model, double price, boolean hasGear, int capacity) {
+    /** Add bike using parameters */
+    public Response<String> addBike(String brand, String model, double price, boolean hasGear, int capacity) {
         Vehicle bike = new Bike(brand, model, price, hasGear, capacity);
         service.addVehicle(bike);
+        return new Response<>(SUCCESS_STATUS_CODE, null, "Bike added successfully!");
     }
 
-    // Rents a vehicle by calling the service method
-    public void rentVehicle(String brand, String model) throws VehicleServiceException {
-        service.rentVehicle(brand, model); 
+    /** Rent a vehicle */
+    public Response<String> rentVehicle(String brand, String model) {
+        try {
+            service.rentVehicle(brand, model);
+            return new Response<>(SUCCESS_STATUS_CODE, null, "Vehicle rented successfully!");
+        } catch (VehicleServiceException e) {
+            return new Response<>(ERROR_STATUS_CODE, e.getMessage(), null);
+        }
     }
 
-    // Returns a rented vehicle
-    public void returnVehicle(String brand, String model) throws VehicleServiceException {
-        service.returnVehicle(brand, model);  
+    /** Return a rented vehicle */
+    public Response<String> returnVehicle(String brand, String model) {
+        try {
+            service.returnVehicle(brand, model);
+            return new Response<>(SUCCESS_STATUS_CODE, null, "Vehicle returned successfully!");
+        } catch (VehicleServiceException e) {
+            return new Response<>(ERROR_STATUS_CODE, e.getMessage(), null);
+        }
     }
 
-    // Calculates revenue from rented vehicles
-    public double calculateRevenue() {
-        return service.calculateTotalRentalPriceForRentedVehicles();
+    /** Calculate revenue */
+    public Response<Double> calculateRevenue() {
+        double total = service.calculateTotalRentalPriceForRentedVehicles();
+        return new Response<>(SUCCESS_STATUS_CODE, null, total);
     }
 }
